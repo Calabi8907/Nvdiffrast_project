@@ -1,0 +1,2 @@
+pose_gd 코드에
+각 sample별 similer pose 존재
