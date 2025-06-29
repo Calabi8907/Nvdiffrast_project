@@ -123,6 +123,19 @@ def display_image(image, zoom=None, size=None, title=None): # HWC
     if glfw.window_should_close(_glfw_window):
         return False
     return True
+# 기존 display_image 함수는 유지하고, 아래 함수 추가
+
+#----------------------------------------------------------------------------
+# Function to explicitly close OpenGL window.
+#----------------------------------------------------------------------------
+
+def close_window():
+    global _glfw_window
+    if _glfw_window is not None:
+        import glfw
+        glfw.destroy_window(_glfw_window)
+        glfw.terminate()
+        _glfw_window = None
 
 #----------------------------------------------------------------------------
 # Image save helper.

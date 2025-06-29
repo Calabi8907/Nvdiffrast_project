@@ -6,6 +6,7 @@ from pose_optimization.pose_gd import fit_pose
 from texture_optimization.texture import fit_texture
 from util.npy_to_obj import save_obj_with_uv_and_texture
 from util.glb_to_npy_version2_fun import convert_glb_to_npy
+from util.util import close_window
 from image_segmentation import process_image
 
 # 실행 아직 안해봄. ******************************************
@@ -25,7 +26,7 @@ def main():
     # 기본 설정값
     max_iter = 1000
     log_interval = 10
-    display_interval = 0
+    display_interval = 1
     enable_mip = True
     use_opengl = False
 
@@ -85,7 +86,7 @@ def main():
         y_deg, pitch, roll, translate_z, translate_y, translate_x = map(float, line.strip().split())
     
     print(f"best_pose_param = y_deg: {y_deg}, pitch: {pitch}, roll: {roll}, translate_z: {translate_z}, translate_y: {translate_y}, translate_x: {translate_x}")
-
+    close_window()
     # 2. Texture Optimization
     print("\n[Step 2] Texture Optimization 시작...")
     fit_texture(
@@ -106,7 +107,7 @@ def main():
         lr_base=1e-2,
         lr_ramp=0.1,
     )
-
+    close_window()
     # 3. Export to Obj
     print("\n📦 Step 3: Export OBJ")
     save_obj_with_uv_and_texture (

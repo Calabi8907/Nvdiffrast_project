@@ -579,40 +579,40 @@ def fit_pose(object_name,
                   f"roll={roll.item():.6f}, z={translate_z.item():.6f}, "
                   f"y={translate_y.item():.6f}, x={translate_x.item():.6f}")
 
-            # Display images
-            # if display_interval and (it % display_interval == 0):
-            if 0:
-                with torch.no_grad():
-                    # 1. L2 loss를 위한 이미지 비교
-                    ref_np = color_ref[0].cpu().numpy()
-                    opt_np = color_opt[0].cpu().numpy()
-                    
-                    scl = display_res // opt_np.shape[0]
-                    ref_img = np.repeat(np.repeat(ref_np, scl, axis=0), scl, axis=1)
-                    opt_img = np.repeat(np.repeat(opt_np, scl, axis=0), scl, axis=1)
+        # Display images
+        if display_interval and (it % display_interval == 0):
+        # if 1:
+            with torch.no_grad():
+                # 1. L2 loss를 위한 이미지 비교
+                ref_np = color_ref[0].cpu().numpy()
+                opt_np = color_opt[0].cpu().numpy()
+                
+                scl = display_res // opt_np.shape[0]
+                ref_img = np.repeat(np.repeat(ref_np, scl, axis=0), scl, axis=1)
+                opt_img = np.repeat(np.repeat(opt_np, scl, axis=0), scl, axis=1)
 
-                    result_image = np.concatenate([opt_img, ref_img], axis=1)
-                    util.display_image(result_image, size=display_res, title=f'Iteration {it} - L2 Comparison')
+                result_image = np.concatenate([opt_img, ref_img], axis=1)
+                util.display_image(result_image, size=display_res, title=f'Iteration {it} - L2 Comparison')
 
-                    # # 2. 실루엣 마스크 비교
-                    # gray1 = 0.299 * color_opt[0, ..., 0] + 0.587 * color_opt[0, ..., 1] + 0.114 * color_opt[0, ..., 2]
-                    # gray2 = 0.299 * color_ref[0, ..., 0] + 0.587 * color_ref[0, ..., 1] + 0.114 * color_ref[0, ..., 2]
-                    
-                    # mask1 = (gray1 > threshold).float()
-                    # mask2 = (gray2 > threshold).float()
+                # # 2. 실루엣 마스크 비교
+                # gray1 = 0.299 * color_opt[0, ..., 0] + 0.587 * color_opt[0, ..., 1] + 0.114 * color_opt[0, ..., 2]
+                # gray2 = 0.299 * color_ref[0, ..., 0] + 0.587 * color_ref[0, ..., 1] + 0.114 * color_ref[0, ..., 2]
+                
+                # mask1 = (gray1 > threshold).float()
+                # mask2 = (gray2 > threshold).float()
 
-                    # # 마스크를 시각화하기 위해 3채널로 변환
-                    # mask1_vis = torch.stack([mask1, mask1, mask1], dim=-1).cpu().numpy()
-                    # mask2_vis = torch.stack([mask2, mask2, mask2], dim=-1).cpu().numpy()
+                # # 마스크를 시각화하기 위해 3채널로 변환
+                # mask1_vis = torch.stack([mask1, mask1, mask1], dim=-1).cpu().numpy()
+                # mask2_vis = torch.stack([mask2, mask2, mask2], dim=-1).cpu().numpy()
 
-                    # # 이미지 크기 조정
-                    # scl = display_res // mask1_vis.shape[0]
-                    # mask1_img = np.repeat(np.repeat(mask1_vis, scl, axis=0), scl, axis=1)
-                    # mask2_img = np.repeat(np.repeat(mask2_vis, scl, axis=0), scl, axis=1)
+                # # 이미지 크기 조정
+                # scl = display_res // mask1_vis.shape[0]
+                # mask1_img = np.repeat(np.repeat(mask1_vis, scl, axis=0), scl, axis=1)
+                # mask2_img = np.repeat(np.repeat(mask2_vis, scl, axis=0), scl, axis=1)
 
-                    # # 마스크 이미지 연결
-                    # result_image = np.concatenate([mask1_img, mask2_img], axis=1)
-                    # util.display_image(result_image, size=display_res, title=f'Iteration {it} - Silhouette Masks')
+                # # 마스크 이미지 연결
+                # result_image = np.concatenate([mask1_img, mask2_img], axis=1)
+                # util.display_image(result_image, size=display_res, title=f'Iteration {it} - Silhouette Masks')
 
    
     # print final best results
